@@ -1,7 +1,9 @@
 package eco.com.gurunanak
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -14,6 +16,8 @@ import com.squareup.okhttp.MediaType
 import com.squareup.okhttp.RequestBody
 import eco.com.gurunanak.http.OkHttpListener
 import eco.com.gurunanak.http.OkHttpPostHandler
+import eco.com.gurunanak.sharedprefrences.GurunanakPreferences
+import eco.com.gurunanak.sharedprefrences.JBGurunanakPreferences
 import eco.com.gurunanak.utlity.Constant
 import eco.com.gurunanak.utlity.UtilityCommon
 import kotlinx.android.synthetic.main.activity_login.*
@@ -26,10 +30,20 @@ import java.util.HashMap
 class Login : Activity(), OkHttpListener {
     internal lateinit var dialog_progress: ACProgressFlower
     val JSON = MediaType.parse("application/json; charset=utf-8")
+    internal lateinit var mSharedPref: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         initial()
+        if (!JBGurunanakPreferences.getLoginId(mSharedPref).equals(""))
+        {
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+
         btn_login.setOnClickListener { view ->
             if (UtilityCommon.isNetworkAvailable(this@Login) === true) {
                 if (input_email.text.equals("")) {
@@ -72,6 +86,8 @@ class Login : Activity(), OkHttpListener {
                 .bgCornerRadius(0f)
                 .fadeColor(Color.DKGRAY).build()
         dialog_progress.setCanceledOnTouchOutside(true)
+        mSharedPref = getSharedPreferences(
+                GurunanakPreferences.Gurunanak_PREFERENCES, Context.MODE_PRIVATE)
     }
 
     override fun onOkHttpResponse(callResponse: String, pageId: Int) {
@@ -87,7 +103,8 @@ class Login : Activity(), OkHttpListener {
                         val toast = Toast.makeText(this@Login, msg, Toast.LENGTH_LONG)
                         toast.setGravity(Gravity.CENTER, 0, 0)
                         toast.show()
-                        val intent = Intent(this, Home::class.java)
+                        JBGurunanakPreferences.setJwtToken(mSharedPref, json.get("email") as String)
+                        val intent = Intent(this, MapsActivity::class.java)
                         startActivity(intent)
                         finish()
 
