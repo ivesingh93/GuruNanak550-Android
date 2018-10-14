@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import cc.cloudist.acplibrary.ACProgressConstant
 import cc.cloudist.acplibrary.ACProgressFlower
+import com.google.android.gms.maps.model.LatLng
 import com.squareup.okhttp.MediaType
 import com.squareup.okhttp.RequestBody
 
@@ -25,6 +26,8 @@ import org.json.JSONTokener
 import java.util.HashMap
 
 class Signup : AppCompatActivity(), OkHttpListener {
+    override fun onOkHttpResponse(callResponse: String, pageId: Int, latLng: LatLng) {
+    }
 
     internal lateinit var dialog_progress: ACProgressFlower
     val JSON = MediaType.parse("application/json; charset=utf-8")
@@ -51,6 +54,8 @@ class Signup : AppCompatActivity(), OkHttpListener {
                     input_age.error = "Please enter age"
                 } else if (input_Address.text.equals("")) {
                     input_Address.error = "Please enter address"
+                } else if (input_Org_name.text.equals("")) {
+                    input_Address.error = "Please enter organisation name"
                 } else {
                     postSignup()
                 }

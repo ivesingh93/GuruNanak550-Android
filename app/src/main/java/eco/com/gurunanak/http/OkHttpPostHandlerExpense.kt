@@ -15,17 +15,21 @@ import java.io.IOException
 /**
  * Created by ss22493 on 14-07-2016.
  */
-class OkHttpPostHandlerExpense(internal var strUrl: String, internal var formBody: RequestBody, internal var mOkHttpListener: OkHttpExpenseListener?, internal var pageId: Int, internal var position: Int) : AsyncTask<Void, Void, Void>() {
+class OkHttpPostHandlerExpense(internal var strUrl: String, internal var formBody: RequestBody,
+                               internal var mOkHttpListener: OkHttpListener?, internal var pageId: Int,
+                               internal var token: String)
+    : AsyncTask<Void, Void, Void>() {
     internal var client = OkHttpClient()
     internal lateinit var response: Response
-
     override fun doInBackground(vararg params: Void): Void? {
 
         val request = Request.Builder()
                 .url(strUrl)
+                .header("token", token)
                 .addHeader("Content-Type", "application/json")
                 .post(formBody)
                 .build()
+
 
 
         Log.i("REQUEST", "" + request)
@@ -46,7 +50,7 @@ class OkHttpPostHandlerExpense(internal var strUrl: String, internal var formBod
         return null
     }
 
-    override fun onPostExecute(aVoid: Void) {
+    override fun onPostExecute(aVoid: Void?) {
         super.onPostExecute(aVoid)
 
         try {
@@ -59,7 +63,7 @@ class OkHttpPostHandlerExpense(internal var strUrl: String, internal var formBod
             }
             val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)
-            sendResponse(response.body().string(), pageId, position)
+            sendResponse(response.body().string(), pageId)
             //return response.body().string();
         } catch (e: Exception) {
             e.printStackTrace()
@@ -68,15 +72,15 @@ class OkHttpPostHandlerExpense(internal var strUrl: String, internal var formBod
 
     }
 
-    private fun sendResponse(response: String, pageId: Int, position: Int) {
+    private fun sendResponse(response: String, pageId: Int) {
         if (mOkHttpListener != null) {
-            mOkHttpListener!!.onOkHttpExpnseResponse(response, pageId, position)
+            mOkHttpListener!!.onOkHttpResponse(response, pageId)
         }
     }
 
     private fun sendError(error: String) {
         if (mOkHttpListener != null) {
-            mOkHttpListener!!.onOkHttpExpnseError(error)
+            mOkHttpListener!!.onOkHttpError(error)
         }
     }
 

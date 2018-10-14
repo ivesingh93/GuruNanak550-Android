@@ -3,6 +3,7 @@ package eco.com.gurunanak.http
 import android.os.AsyncTask
 import android.os.StrictMode
 import android.util.Log
+import com.google.android.gms.maps.model.LatLng
 
 import com.squareup.okhttp.Headers
 import com.squareup.okhttp.OkHttpClient
@@ -15,11 +16,10 @@ import java.io.IOException
 /**
  * Created by ss22493 on 07-07-2016.
  */
-class OkHttpGetHandler(internal var strUrl: String, internal var mOkHttpListener: OkHttpListener?, internal var pageId: Int)
+class OkHttpGetHandler(internal var strUrl: String, internal var mOkHttpListener: OkHttpListener?, internal var pageId: Int, var latLng: LatLng)
     : AsyncTask<Void, Void, Void>() {
-    internal var client = OkHttpClient()
-    internal var formBody: RequestBody? = null
-    internal lateinit var response: Response
+     internal var client = OkHttpClient()
+     internal lateinit var response: Response
 
     override fun doInBackground(vararg params: Void): Void? {
 
@@ -47,7 +47,7 @@ class OkHttpGetHandler(internal var strUrl: String, internal var mOkHttpListener
         return null
     }
 
-    override fun onPostExecute(aVoid: Void) {
+    override fun onPostExecute(aVoid: Void?) {
         super.onPostExecute(aVoid)
 
         try {
@@ -60,7 +60,7 @@ class OkHttpGetHandler(internal var strUrl: String, internal var mOkHttpListener
             }
             val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)
-            sendResponse(response.body().string(), pageId)
+            sendResponse(response.body().string(), pageId,latLng)
             //return response.body().string();
         } catch (e: Exception) {
             e.printStackTrace()
@@ -69,9 +69,9 @@ class OkHttpGetHandler(internal var strUrl: String, internal var mOkHttpListener
 
     }
 
-    private fun sendResponse(response: String, pageId: Int) {
+    private fun sendResponse(response: String, pageId: Int,latLng: LatLng) {
         if (mOkHttpListener != null) {
-            mOkHttpListener!!.onOkHttpResponse(response, pageId)
+            mOkHttpListener!!.onOkHttpResponse(response, pageId,latLng)
         }
     }
 

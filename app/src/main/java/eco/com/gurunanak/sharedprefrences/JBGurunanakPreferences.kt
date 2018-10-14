@@ -4,12 +4,12 @@ import android.content.SharedPreferences
 
 object JBGurunanakPreferences {
 
-    fun setJwtToken(preferences: SharedPreferences, email: String) {
-        preferences.edit().putString(GurunanakPreferences.JWT_TOKEN, email).commit()
+    fun setOrgName(preferences: SharedPreferences, email: String) {
+        preferences.edit().putString(GurunanakPreferences.ORG_NAME, email).commit()
     }
 
-    fun getJwtToken(preferences: SharedPreferences): String? {
-        return preferences.getString(GurunanakPreferences.JWT_TOKEN, GurunanakPreferences.JWT_TOKEN_VALUE)
+    fun getOrgName(preferences: SharedPreferences): String? {
+        return preferences.getString(GurunanakPreferences.ORG_NAME, GurunanakPreferences.ORG_NAME_VALUE)
     }
 
     fun setLoginId(preferences: SharedPreferences, email: String) {
@@ -19,5 +19,14 @@ object JBGurunanakPreferences {
     fun getLoginId(preferences: SharedPreferences): String? {
         return preferences.getString(GurunanakPreferences.LOGIN_ID, GurunanakPreferences.LOGIN_ID_VALUE)
     }
+
+    fun setJWTToken(preferences: SharedPreferences, email: String) {
+        preferences.edit().putString(GurunanakPreferences.JWT_TOKEN, email).commit()
+    }
+
+    fun getJWTToken(preferences: SharedPreferences): String? {
+        return preferences.getString(GurunanakPreferences.JWT_TOKEN, GurunanakPreferences.JWT_TOKEN_VALUE)
+    }
+
 
 }

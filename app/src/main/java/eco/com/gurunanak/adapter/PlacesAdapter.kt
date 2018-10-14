@@ -17,13 +17,13 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 class PlacesAdapter(context: Context, resourceId: Int, geoData:
-GeoDataClient, filter: AutocompleteFilter?, boundS_GREATER_SYDNEY: LatLngBounds)
+GeoDataClient, filter: AutocompleteFilter?)
     : ArrayAdapter<AutocompletePrediction>(context, resourceId), Filterable {
 
     var resultList: MutableList<AutocompletePrediction> = ArrayList<AutocompletePrediction>()
     private val TAG = "PlaceAutoAdapter"
     val mContext = context
-    val bounds = boundS_GREATER_SYDNEY
+    //val bounds = boundS_GREATER_SYDNEY
 
     val geoDataClient = geoData
     val mPlaceFilter = filter
@@ -99,7 +99,7 @@ GeoDataClient, filter: AutocompleteFilter?, boundS_GREATER_SYDNEY: LatLngBounds)
 
         // Submit the query to the autocomplete API and retrieve a PendingResult that will
         // contain the results when the query completes.
-        val results = geoDataClient.getAutocompletePredictions(constraint.toString(), bounds,
+        val results = geoDataClient.getAutocompletePredictions(constraint.toString(), null,
                 mPlaceFilter)
 
         // This method should have been called off the main UI thread. Block and wait for at most

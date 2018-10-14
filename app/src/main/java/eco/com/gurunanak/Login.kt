@@ -12,6 +12,7 @@ import android.view.Gravity
 import android.widget.Toast
 import cc.cloudist.acplibrary.ACProgressConstant
 import cc.cloudist.acplibrary.ACProgressFlower
+import com.google.android.gms.maps.model.LatLng
 import com.squareup.okhttp.MediaType
 import com.squareup.okhttp.RequestBody
 import eco.com.gurunanak.http.OkHttpListener
@@ -28,6 +29,10 @@ import java.util.HashMap
 
 
 class Login : Activity(), OkHttpListener {
+    override fun onOkHttpResponse(callResponse: String, pageId: Int, latLng: LatLng) {
+
+    }
+
     internal lateinit var dialog_progress: ACProgressFlower
     val JSON = MediaType.parse("application/json; charset=utf-8")
     internal lateinit var mSharedPref: SharedPreferences
@@ -36,8 +41,7 @@ class Login : Activity(), OkHttpListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         initial()
-        if (!JBGurunanakPreferences.getLoginId(mSharedPref).equals(""))
-        {
+        if (!JBGurunanakPreferences.getLoginId(mSharedPref).equals("")) {
             val intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
             finish()
@@ -103,7 +107,11 @@ class Login : Activity(), OkHttpListener {
                         val toast = Toast.makeText(this@Login, msg, Toast.LENGTH_LONG)
                         toast.setGravity(Gravity.CENTER, 0, 0)
                         toast.show()
-                        JBGurunanakPreferences.setJwtToken(mSharedPref, json.get("email") as String)
+                        JBGurunanakPreferences.setLoginId(mSharedPref, json.get("email") as String)
+                        JBGurunanakPreferences.setOrgName(mSharedPref, json.get("organization_name") as String)
+                        JBGurunanakPreferences.setJWTToken(mSharedPref, json.get("token") as String)
+
+
                         val intent = Intent(this, MapsActivity::class.java)
                         startActivity(intent)
                         finish()
