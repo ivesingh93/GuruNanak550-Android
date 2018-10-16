@@ -258,6 +258,8 @@ public class MyFTPClientFunctions {
 
             srcFileStream.close();
 
+
+            Log.e("status","is "+status);
             return status;
         } catch (Exception e) {
             e.printStackTrace();
@@ -277,9 +279,9 @@ public class MyFTPClientFunctions {
             // change working directory to the destination directory
             // if (ftpChangeDirectory(desDirectory)) {
             status = mFTPClient.storeFile(desFileName, srcFileStream);
-            // }
 
             srcFileStream.close();
+            Log.e("hehehes"+mFTPClient.getStatus(), "upload: " + status);
 
             return status;
         } catch (Exception e) {

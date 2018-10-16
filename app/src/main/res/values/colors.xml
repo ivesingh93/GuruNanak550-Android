@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#56dcc3</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="grey">#808080</color>
-    <color name="white">#000000</color>
+    <color name="black">#000000</color>
+    <color name="login_box_bg">#efefef</color>
+    <color name="white">#fff</color>
+    <color name="header">#256155</color>
+    <color name="screen_bg">#378b7b</color>
+    <color name="yellow">#fec900</color>
+    <color name="login_btn_clolor">#56dcc3</color>
 </resources>

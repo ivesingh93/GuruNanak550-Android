@@ -1,20 +1,20 @@
 package eco.com.gurunanak
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.widget.Toast
 import cc.cloudist.acplibrary.ACProgressConstant
 import cc.cloudist.acplibrary.ACProgressFlower
 import com.google.android.gms.maps.model.LatLng
 import com.squareup.okhttp.MediaType
 import com.squareup.okhttp.RequestBody
+import com.tudle.utils.BaseActivity
 import eco.com.gurunanak.http.OkHttpListener
 import eco.com.gurunanak.http.OkHttpPostHandler
 import eco.com.gurunanak.sharedprefrences.GurunanakPreferences
@@ -25,10 +25,10 @@ import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONException
 import org.json.JSONObject
 import org.json.JSONTokener
-import java.util.HashMap
+import java.util.*
 
 
-class Login : Activity(), OkHttpListener {
+class Login : BaseActivity(), OkHttpListener {
     override fun onOkHttpResponse(callResponse: String, pageId: Int, latLng: LatLng) {
 
     }
@@ -42,8 +42,9 @@ class Login : Activity(), OkHttpListener {
         setContentView(R.layout.activity_login)
         initial()
         if (!JBGurunanakPreferences.getLoginId(mSharedPref).equals("")) {
-            val intent = Intent(this, MapsActivity::class.java)
+            val intent = Intent(this, Activity_Home::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             finish()
         }
 
@@ -66,7 +67,14 @@ class Login : Activity(), OkHttpListener {
         link_signup.setOnClickListener { view ->
             val intent = Intent(this, Signup::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
+    }
+
+    fun forgot(v: View){
+        val intent = Intent(this, ActivityForgot::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     private fun postLogin() {
@@ -112,8 +120,9 @@ class Login : Activity(), OkHttpListener {
                         JBGurunanakPreferences.setJWTToken(mSharedPref, json.get("token") as String)
 
 
-                        val intent = Intent(this, MapsActivity::class.java)
+                        val intent = Intent(this, Activity_Home::class.java)
                         startActivity(intent)
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
                         finish()
 
                     } else {

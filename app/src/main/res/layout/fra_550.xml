@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+
+    android:padding="20dp"
+
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/my_logo"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="@color/header"
+            android:text="http://gurunanak550.org/"
+            android:id="@+id/ecosikh"
+            android:textSize="16sp"
+            android:layout_marginTop="-20dp"
+            android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="With this mobile app you can tag your the trees you planted in your area on the Google Maps. Log on into this app and be a part of the global campaign. Check all the national and international organisations who participated in the plantation drive; check where and how many trees have been planted around the world on Guru Nanak's 550th anniversary.
+Checkout our video tutorials by tree expert, Balwinder Lakhewali to learn more about trees in Gurbani and Punjab's other native trees; their benefits, how to select and plant a tree as per location etc. Additionally you can download posters, banners and designs for this international campaign."
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginTop="0dp"
+        android:textColor="@color/black"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>

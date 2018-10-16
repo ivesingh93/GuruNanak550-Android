@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="80dp"
+        android:text="Location"
+        android:textSize="14sp"
+        android:textColor="@color/grey"
+        android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:singleLine="true"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:id="@+id/txtLocation"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            
+            android:background="@drawable/shape_box"
+            android:layout_height="46dp" />
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="80dp"
+                android:text="Date Of Plantation"
+                android:textSize="14sp"
+                android:textColor="@color/grey"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:id="@+id/txtDate"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                
+                android:background="@drawable/shape_box"
+                android:layout_height="46dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="80dp"
+                android:text="No of Tress"
+                android:textSize="14sp"
+                android:textColor="@color/grey"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:inputType="numberDecimal"
+                android:id="@+id/txtNoOfTree"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:background="@drawable/shape_box"
+                android:layout_height="46dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="80dp"
+                android:text="Type of Plants"
+                android:textSize="14sp"
+                android:textColor="@color/grey"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:id="@+id/txtTypePlant"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                
+                android:background="@drawable/shape_box"
+                android:layout_height="46dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="80dp"
+                android:text="Remarks"
+                android:textSize="14sp"
+                android:textColor="@color/grey"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:id="@+id/txtRemark"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                
+                android:background="@drawable/shape_box"
+                android:layout_height="46dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="80dp"
+                android:text="Image"
+                android:textSize="16sp"
+                android:id="@+id/txtImage"
+                android:textColor="@color/grey"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/imgImage"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/ic_photo_camera_black_24dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+
+                android:textColor="@color/grey"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="80dp"
+                android:text="Video"
+                android:textSize="16sp"
+                android:textColor="@color/grey"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_width="44dp"
+                android:singleLine="true"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:id="@+id/imgVideo"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+
+                android:background="@drawable/video"
+                android:layout_height="44dp" />
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnSave"
+            android:layout_width="fill_parent"
+            android:layout_height="52dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="24dp"
+            android:textColor="@color/white"
+            android:background="@color/screen_bg"
+            android:padding="12dp"
+            android:text="SUBMIT" />
+
+    </LinearLayout>
+
+</ScrollView>
