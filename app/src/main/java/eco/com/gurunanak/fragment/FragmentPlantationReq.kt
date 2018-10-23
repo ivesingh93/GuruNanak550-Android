@@ -39,11 +39,16 @@ class FragmentPlantationReq : Fragment() {
         return inflater.inflate(R.layout.fra_my_plantation, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Set title
+        activity!!.title = "Plantation Requests"
+    }
 
     override fun onViewCreated(view: View,savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity!!.title = "Plantation Requests"
+
 
         initial()
         getPendingReqs()

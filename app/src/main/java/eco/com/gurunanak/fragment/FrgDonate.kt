@@ -25,11 +25,15 @@ class FrgDonate : Fragment() {
         return inflater.inflate(R.layout.fragment_fragment_plantation_req, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        activity!!.title = "Donate"
+
+    }
 
     override fun onViewCreated(view: View,savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //you can set the title for your toolbar here for different fragments different titles
-        activity!!.title = "Donate"
     }
 
 }

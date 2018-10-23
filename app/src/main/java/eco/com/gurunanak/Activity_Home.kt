@@ -42,6 +42,8 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
     val SELECT_FILE = 2002
     val selectVideo=2003
     internal lateinit var dialog_progress: ACProgressFlower
+    var selectedFragId=0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,13 +79,6 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
 
     }
 
-    override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
 
 //    override fun onResume() {
 //        super.onResume()
@@ -102,9 +97,9 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
     private fun displaySelectedScreen(itemId: Int) {
 
         //creating fragment object
+
         var fragment: Fragment? = null
 
-        //initializing the fragment object which is selected
         when (itemId) {
             R.id.op1 -> fragment = FrgAddNewPl(this)
             R.id.op2 -> fragment = FragmentPlantationReq()
@@ -122,48 +117,46 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         //replacing the fragment
         if (fragment != null) {
             val ft = supportFragmentManager.beginTransaction()
-            ft.replace(R.id.content_frame, fragment)
+            ft.add(R.id.content_frame, fragment)
             ft.commit()
         }
-
+        Log.e("lenss","Ass "+supportFragmentManager.getBackStackEntryCount())
 
         drawer_layout.closeDrawer(GravityCompat.START)
     }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         displaySelectedScreen(item.getItemId());
-//        when (item.itemId) {
-//            R.id.op1 -> {
-//                // Handle the camera action
-//            }
-//            R.id.op2 -> {
-//
-//            }
-//            R.id.op3 -> {
-//
-//            }
-//            R.id.op4 -> {
-//
-//            }
-//            R.id.op5 -> {
-//
-//            }
-//            R.id.op6 -> {
-//
-//            }
-//            R.id.op7 -> {
-//
-//            }
-//            R.id.op8 -> {
-//
-//            }
-//            R.id.op9 -> {
-//
-//            }
-//            R.id.op10 -> {
-//
-//            }
-//        }
+        when (item.itemId) {
+            R.id.op1 -> {
+                selectedFragId=1
+            }
+            R.id.op2 -> {
+                selectedFragId=0
+            }
+            R.id.op3 -> {
+                selectedFragId=1
+            }
+            R.id.op4 -> {
+                selectedFragId=1
+            }
+            R.id.op5 -> {
+                selectedFragId=1
+            }
+            R.id.op6 -> {
+                selectedFragId=1
+            }
+            R.id.op7 -> {
+                selectedFragId=1
+            }
+            R.id.op8 -> {
+                selectedFragId=1
+            }
+            R.id.op9 -> {
+                selectedFragId=1
+            }
+
+        }
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
@@ -408,6 +401,27 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         startActivityForResult(Intent.createChooser(intent, "Select Video"), selectVideo)
 
     }
+
+
+    override fun onBackPressed() {
+
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            drawer_layout.closeDrawer(GravityCompat.START)
+        }
+
+
+        else if (selectedFragId>0){
+            displaySelectedScreen(R.id.op2)
+            selectedFragId=0
+        }
+
+        else {
+            super.onBackPressed();
+        }
+
+    }
+
+
 }
 
 

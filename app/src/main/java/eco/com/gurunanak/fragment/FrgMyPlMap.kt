@@ -79,7 +79,10 @@ class FrgMyPlMap : Fragment(), OnMapReadyCallback, OkHttpListener {
 
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        activity!!.title = "MAP"
+    }
     private fun checkPermissions(): Boolean {
         val permissionState = ActivityCompat.checkSelfPermission(activity!!,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -187,7 +190,7 @@ class FrgMyPlMap : Fragment(), OnMapReadyCallback, OkHttpListener {
 
     override fun onViewCreated(view: View,savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity!!.title = "MAP"
+
         mapView =view.findViewById(R.id.map) as MapView
         mapView!!.onCreate(savedInstanceState);
         mapView!!.onResume();

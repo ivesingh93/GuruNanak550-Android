@@ -61,7 +61,12 @@ class FrgAddNewPl(context: Context) : Fragment() {
         return inflater.inflate(R.layout.frg_new_pl, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Set title
+        activity!!.title = "Add new Plantation"
 
+    }
     private fun initial() {
 
         dialog_progress = ACProgressFlower.Builder(activity)
@@ -81,7 +86,6 @@ class FrgAddNewPl(context: Context) : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initial()
         //you can set the title for your toolbar here for different fragments different titles
-        activity!!.title = "Add new Plantation"
         val act = activity as Activity_Home
         act.someMethodToLoadFragment(this!!)
         txtLocation = view.findViewById(R.id.txtLocation)

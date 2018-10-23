@@ -36,11 +36,15 @@ class FrgFAQ : Fragment() {
         return inflater.inflate(R.layout.frg_faq, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        activity!!.title = "FAQs"
+    }
 
     override fun onViewCreated(view: View,savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //you can set the title for your toolbar here for different fragments different titles
-        activity!!.title = "FAQs"
+
 
         val call1 = RestClient.create().getQuery()
         call1.enqueue(object : Callback<List<data_faq>> {

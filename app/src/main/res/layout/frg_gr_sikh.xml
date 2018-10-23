@@ -19,14 +19,18 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_height="120dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:textColor="@color/header"
-        android:text="http://www.ecosikh.org/"
-        android:id="@+id/ecosikh"
-        android:textSize="16sp"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content" />
+
+
+        <Button
+            android:layout_width="200dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="Website"
+            android:background="@color/screen_bg"
+            android:id="@+id/ecosikh2"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:layout_height="42dp" />
     <TextView
         android:layout_width="wrap_content"
         android:text="EcoSikh is a response from the Sikh community to the threats of climate change and the deterioration of the natural environment. Our organization arose as part of the Long Term Plans for Generational Change programme initiated in 2009 by the United Nations Development Programme (UNDP) and the Alliance of Religions and Conservation, UK (ARC) to help the world’s major religious traditions create long-term plan to improve their relationship with the environment and to guide their investment towards environmental protection."

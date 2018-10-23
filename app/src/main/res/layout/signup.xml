@@ -191,8 +191,6 @@
                 android:layout_height="52dp"
                 android:layout_marginLeft="10dp"
                 android:hint="Mobile Number"
-                android:focusable="false"
-                android:editable="false"
                 android:maxLength="12"
                 android:inputType="numberDecimal"
                 android:background="@android:color/transparent"

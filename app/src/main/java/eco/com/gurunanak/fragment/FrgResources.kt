@@ -29,6 +29,13 @@ class FrgResources : Fragment() {
     override fun onViewCreated(view: View,savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //you can set the title for your toolbar here for different fragments different titles
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+
         activity!!.title = "Resources"
     }
 

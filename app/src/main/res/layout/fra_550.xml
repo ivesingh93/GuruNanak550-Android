@@ -13,22 +13,24 @@
         android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="160dp"
         android:src="@drawable/my_logo"
         android:gravity="center_horizontal"
         android:layout_marginTop="40dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_height="wrap_content" />
+        android:layout_height="160dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:textColor="@color/header"
-            android:text="http://gurunanak550.org/"
+        <Button
+            android:layout_width="200dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="Website"
+            android:background="@color/screen_bg"
             android:id="@+id/ecosikh"
             android:textSize="16sp"
-            android:layout_marginTop="-20dp"
-            android:layout_height="wrap_content" />
+            android:layout_marginTop="10dp"
+            android:layout_height="42dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,7 +40,7 @@ Checkout our video tutorials by tree expert, Balwinder Lakhewali to learn more a
         android:layout_marginBottom="10dp"
         android:textSize="16sp"
         android:gravity="center"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/black"
         android:layout_alignParentBottom="true"
         android:layout_height="wrap_content" />

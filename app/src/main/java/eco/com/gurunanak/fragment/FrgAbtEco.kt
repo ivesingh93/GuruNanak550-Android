@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import eco.com.gurunanak.R
 import kotlinx.android.synthetic.main.fra_550.*
+import kotlinx.android.synthetic.main.frg_gr_sikh.*
 
 
 private const val ARG_PARAM1 = "param1"
@@ -27,20 +28,24 @@ class FrgAbtEco : Fragment() {
         return inflater.inflate(R.layout.frg_gr_sikh, container, false)
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        // Set title
+        activity!!.title = "About EcoSikh"
+    }
     override fun onViewCreated(view: View,savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //you can set the title for your toolbar here for different fragments different titles
-        activity!!.title = "About EcoSikh"
 
-        ecosikh.setOnClickListener({
+
+        ecosikh2.setOnClickListener({
 
 
             val sendIntent = Intent()
 
 
             val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(ecosikh.text.toString())
+            i.data = Uri.parse("http://www.ecosikh.org/")
             startActivity(i)
 
         })

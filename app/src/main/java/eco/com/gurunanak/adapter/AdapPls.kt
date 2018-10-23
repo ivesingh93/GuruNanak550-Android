@@ -25,7 +25,7 @@ class AdapPls(val data_list: List<data_pls>,
         var date = data_list[position].date_planted
         var spf = SimpleDateFormat("yyyy-MM-dd")
         val newDate = spf.parse(date)
-        spf = SimpleDateFormat("yyyy/MM/dd")
+        spf = SimpleDateFormat("dd-MMM-yyyy")
         date = spf.format(newDate)
         println(date)
         holder.title3.setText(""+date)

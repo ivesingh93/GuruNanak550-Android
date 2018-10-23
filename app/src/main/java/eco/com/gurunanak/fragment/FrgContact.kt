@@ -43,7 +43,12 @@ class FrgContact : Fragment() {
         return inflater.inflate(R.layout.frg_contact, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Set title
+        activity!!.title = "Contact"
 
+    }
     private fun initial() {
         dialog_progress = ACProgressFlower.Builder(activity)
                 .direction(ACProgressConstant.DIRECT_CLOCKWISE)

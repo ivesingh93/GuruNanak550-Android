@@ -22,16 +22,21 @@ class FrgAbt550 : Fragment() {
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        // Set title
+        activity!!.title = "ABOUT"
+    }
     override fun onViewCreated(view: View,savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //you can set the title for your toolbar here for different fragments different titles
-        activity!!.title = "ABOUT"
+
 
         ecosikh.setOnClickListener({
 
 
             val i = Intent(Intent.ACTION_VIEW)
-            i.data = Uri.parse(ecosikh.text.toString())
+            i.data = Uri.parse("http://gurunanak550.org/")
             activity!!.startActivity(i)
 
         })
