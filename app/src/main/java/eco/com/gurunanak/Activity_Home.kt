@@ -2,20 +2,25 @@ package eco.com.gurunanak
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.location.LocationManager
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.provider.Settings
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import cc.cloudist.acplibrary.ACProgressConstant
 import cc.cloudist.acplibrary.ACProgressFlower
 import com.google.android.gms.location.places.ui.PlacePicker
@@ -43,6 +48,7 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
     val selectVideo=2003
     internal lateinit var dialog_progress: ACProgressFlower
     var selectedFragId=0
+    var locationManager: LocationManager? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,13 +109,23 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         when (itemId) {
             R.id.op1 -> fragment = FrgAddNewPl(this)
             R.id.op2 -> fragment = FragmentPlantationReq()
-            R.id.op3 -> fragment = FrgMyPlMap()
+            R.id.op3 -> {
+
+                if(CheckEnableGPS()){
+                    fragment = FrgMyPlMap()
+                }}
             R.id.op4 -> fragment = FrgAbt550()
             R.id.op5 -> fragment = FrgAbtEco()
             R.id.op6 -> fragment = FrgDonate()
             R.id.op7 -> fragment = FrgContact()
             R.id.op8 -> fragment = FrgResources()
             R.id.op9 -> fragment = FrgFAQ()
+            R.id.op10 -> fragment = FrgProfile()
+            R.id.op11 -> {
+
+                if(CheckEnableGPS()){
+                    fragment = FrgAllPlantation()
+                }}
 
 
         }
@@ -153,6 +169,12 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
                 selectedFragId=1
             }
             R.id.op9 -> {
+                selectedFragId=1
+            }
+            R.id.op10 -> {
+                selectedFragId=1
+            }
+            R.id.op11 -> {
                 selectedFragId=1
             }
 
@@ -420,7 +442,28 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         }
 
     }
+    fun CheckEnableGPS():Boolean {
 
+
+        locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
+        val GpsStatus = locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        // Check if enabled and if not send user to the GPS settings
+        if (!GpsStatus) {
+
+            AlertDialog.Builder(this).setTitle("Gps is disabled!").setMessage("To continue, turn on device location, which uses Google's location service").
+                    setCancelable(false)
+                    .setPositiveButton("Enable") { dialog, id ->
+                        var intent =  Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(intent);
+                        dialog.cancel()
+                    }
+                    .setNegativeButton("Cancel") { dialog, id -> dialog.cancel() }.show()
+
+
+        }
+        return GpsStatus
+    }
 
 }
 

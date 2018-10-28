@@ -2,12 +2,10 @@ package eco.com.gurunanak.fragment
 
 import android.Manifest
 import android.content.Context
-import android.content.IntentSender
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.os.Looper
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
@@ -19,8 +17,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.location.places.GeoDataClient
 import com.google.android.gms.location.places.PlaceBufferResponse
@@ -34,8 +30,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.gson.Gson
 import com.nabinbhandari.android.permissions.PermissionHandler
@@ -46,36 +40,63 @@ import eco.com.gurunanak.adapter.PlacesAdapter
 import eco.com.gurunanak.http.OkHttpGetHandler
 import eco.com.gurunanak.http.OkHttpListener
 import eco.com.gurunanak.model.JBJBMarker
-import eco.com.gurunanak.sharedprefrences.GurunanakPreferences
-import eco.com.gurunanak.sharedprefrences.JBGurunanakPreferences
+import eco.com.gurunanak.sharedprefrences.Prefs
+import eco.com.gurunanak.sharedprefrences.SharedPreferencesName
 import eco.com.gurunanak.utlity.Constant
+import eco.com.gurunanak.utlity.LocationFetcher
 import kotlinx.android.synthetic.main.activity_maps.*
 import org.json.JSONException
 import org.json.JSONObject
 import org.json.JSONTokener
-var googleMap: GoogleMap? = null
+private var googleMap: GoogleMap? = null
 private var mapView:MapView?=null
-lateinit var latLng: LatLng
-lateinit var mLocationRequest: LocationRequest
-lateinit var mLocationCallback: LocationCallback
-var isAutoCompleteLocation = false
-lateinit var location: Location
+private var latLng: LatLng?=null
+private lateinit var mLocationRequest: LocationRequest
+private lateinit var mLocationCallback: LocationCallback
+private var isAutoCompleteLocation = false
 private var mGson: Gson? = null
-internal lateinit var mJBMaker: JBJBMarker
-lateinit var placesAdapter: PlacesAdapter
-lateinit var mGeoDataClient: GeoDataClient
-lateinit var mSettingsClient: SettingsClient
-var mFusedLocationClient: FusedLocationProviderClient?=null
-lateinit var mLocationSettingsRequest: LocationSettingsRequest
-private val REQUEST_CHECK_SETTINGS = 0x1
-val REQUEST_LOCATION = 1011
-val RequestPermissionCode = 1
-var myloc:FloatingActionButton?=null
-internal lateinit var mSharedPref: SharedPreferences
-class FrgMyPlMap : Fragment(), OnMapReadyCallback, OkHttpListener {
+private  lateinit var mJBMaker: JBJBMarker
+private lateinit var placesAdapter: PlacesAdapter
+private lateinit var mGeoDataClient: GeoDataClient
+
+private var myloc:FloatingActionButton?=null
+private var isMapMoved=false
+private var isLocationFteched:Boolean=false
+class FrgMyPlMap : Fragment(), OnMapReadyCallback, OkHttpListener ,
+        LocationFetcher.OnLocationChangedListener{
+
+    var   locationFetcher:LocationFetcher?=null;
+
+        override fun onLocationChanged(location: Location, priority: Int) {
+            latLng = LatLng(location.latitude, location.longitude)
+
+            if(!isMapMoved) {
+                assignToMap()
+            }
+            if(!isLocationFteched) {
+                if(latLng!=null) {
+                    Log.e("map is ","ready2")
+                    getDataLatLng("all", "all", latLng!!)
+                }
+            }
+
+            isMapMoved=true
+
+        }
+
     override fun onMapReady(p0: GoogleMap?) {
 
         googleMap = p0;
+        isLocationFteched=false
+        Log.e("map is ","ready")
+
+        if(checkPermissions()) {
+            locationFetcher = LocationFetcher(this, 1000, 1,activity!!);
+            locationFetcher!!.connect();
+        }
+        else{
+            EnableRuntimePermission()
+        }
 
     }
 
@@ -90,85 +111,15 @@ class FrgMyPlMap : Fragment(), OnMapReadyCallback, OkHttpListener {
     }
 
 
-    private fun initLocation() {
-        try {
-            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
-            getLastLocation()
-            try {
-
-                mSettingsClient.checkLocationSettings(mLocationSettingsRequest)
-                        .addOnSuccessListener(activity!!, object : OnSuccessListener<LocationSettingsResponse> {
-                            override fun onSuccess(p0: LocationSettingsResponse?) {
-                                mFusedLocationClient!!.requestLocationUpdates(mLocationRequest,
-                                        mLocationCallback, Looper.myLooper());
-                            }
-
-                        }).addOnFailureListener(activity!!, object : OnFailureListener {
-                            override fun onFailure(p0: java.lang.Exception) {
-                                val statusCode = (p0 as ApiException).getStatusCode();
-                                when (statusCode) {
-                                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
-                                        Log.i("Location", "Location settings are not satisfied. Attempting to upgrade " +
-                                                "location settings ");
-                                        try {
-                                            // Show the dialog by calling startResolutionForResult(), and check the
-                                            // result in onActivityResult().
-                                            val rae = p0 as ResolvableApiException
-                                            rae.startResolutionForResult(activity!!, REQUEST_CHECK_SETTINGS);
-                                        } catch (sie: IntentSender.SendIntentException) {
-                                            Log.i("Location", "PendingIntent unable to execute request.");
-                                        }
-                                    }
-
-                                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE ->
-                                        Toast.makeText(activity!!, "Location settings are inadequate, and cannot be \"+\n" +
-                                                "                                    \"fixed here. Fix in Settings.", Toast.LENGTH_LONG).show();
 
 
-                                }
-                            }
-
-                        })
-
-            } catch (unlikely: SecurityException) {
-                Log.e("Location", "Lost location permission. Could not request updates. " + unlikely)
-            }
-        } catch (e: SecurityException) {
-            e.printStackTrace()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun getLastLocation() {
-        try {
-            mFusedLocationClient!!.getLastLocation()?.addOnCompleteListener { task ->
-                if (task.isSuccessful && task.result != null) {
-                    location = task.getResult()
-                    latLng = LatLng(location.latitude, location.longitude)
-                    assignToMap()
-
-                } else {
-                    Log.w("Location", "Failed to get location.")
-                }
-            }
-        } catch (unlikely: SecurityException) {
-            Log.e("Location", "Lost location permission." + unlikely)
-        }
-
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        mSharedPref = activity!!.getSharedPreferences(
-                GurunanakPreferences.Gurunanak_PREFERENCES, Context.MODE_PRIVATE)
 
-        if (checkPermissions()) {
-            initLocation()
-        } else {
-            EnableRuntimePermission()
-        }
+
+
         return inflater.inflate(R.layout.frg_map, container, false)
 
     }
@@ -177,13 +128,14 @@ class FrgMyPlMap : Fragment(), OnMapReadyCallback, OkHttpListener {
     fun EnableRuntimePermission() {
 
         val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+
         Permissions.check(activity, permissions, null, null, object : PermissionHandler() {
             override fun onGranted() {
-                // Toast.makeText(applicationContext, "Camera+Storage granted.", Toast.LENGTH_SHORT).show()
-                initLocation()
+                locationFetcher = LocationFetcher(this@FrgMyPlMap, 1000, 1,activity!!);
+                locationFetcher!!.connect();
+
             }
         })
-
 
     }
 
@@ -194,32 +146,29 @@ class FrgMyPlMap : Fragment(), OnMapReadyCallback, OkHttpListener {
         mapView =view.findViewById(R.id.map) as MapView
         mapView!!.onCreate(savedInstanceState);
         mapView!!.onResume();
-        mapView!!.getMapAsync(this);
+        mapView!!.getMapAsync(this)
         mGeoDataClient = Places.getGeoDataClient(activity!!, null);
         myloc=view.findViewById(R.id.myloc) as FloatingActionButton
 
 
-        mLocationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
-                val loc = locationResult!!.lastLocation
-                if (!isAutoCompleteLocation) {
-                    location = loc
-                    latLng = LatLng(location.latitude, location.longitude)
-                    getDataLatLng("all", "all", latLng)
-                }
+
+        myloc!!.setOnClickListener({
+
+            if(latLng!=null){
+                assignToMap()
             }
 
-        }
-        myloc!!.setOnClickListener({getLastLocation()})
+
+        })
 
         mLocationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
 
 
-        mSettingsClient = LocationServices.getSettingsClient(activity!!)
+
         val builder = LocationSettingsRequest.Builder();
         builder.addLocationRequest(mLocationRequest)
-        mLocationSettingsRequest = builder.build()
+
 
         placesAdapter = PlacesAdapter(activity!!, android.R.layout.simple_list_item_1, mGeoDataClient, null)
         enter_place.setAdapter(placesAdapter)
@@ -252,7 +201,7 @@ class FrgMyPlMap : Fragment(), OnMapReadyCallback, OkHttpListener {
             placeResult.addOnCompleteListener(object : OnCompleteListener<PlaceBufferResponse> {
                 override fun onComplete(task: Task<PlaceBufferResponse>) {
                     val places = task.getResult()
-                    val place = places.get(0)
+                    val place = places!!.get(0)!!
 
                     val placeId = place.id
                     isAutoCompleteLocation = true
@@ -271,13 +220,14 @@ class FrgMyPlMap : Fragment(), OnMapReadyCallback, OkHttpListener {
     fun getDataLatLng(email: String, status: String, latLng: LatLng) {
 
         OkHttpGetHandler(Constant.BASE_URL + Constant.SAVE_PLANT_RECORDS + "/email=" +
-                JBGurunanakPreferences.getLoginId(mSharedPref)!! + "&status=" + status, this, 1, latLng).execute()
+                Prefs.with(activity!!).getString(SharedPreferencesName.EMAIL,"")!! + "&status=" + status, this, 1, latLng).execute()
 
 
     }
 
 
     override fun onOkHttpResponse(callResponse: String, pageId: Int, latLng1: LatLng) {
+        isLocationFteched=true
         if (pageId == 0) {
             Log.e("RESPONSE","res  "+ callResponse)
             //{"ResponseCode":200,"Message":"Success"}
@@ -365,10 +315,11 @@ class FrgMyPlMap : Fragment(), OnMapReadyCallback, OkHttpListener {
     private fun assignToMap() {
         //googleMap?.clear()
 
-
-        googleMap?.apply {
-            moveCamera(CameraUpdateFactory.newLatLng(latLng))
-            animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.0f))
+        if(googleMap!=null) {
+            googleMap?.apply {
+                moveCamera(CameraUpdateFactory.newLatLng(latLng))
+                animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.0f))
+            }
         }
     }
 

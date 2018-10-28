@@ -17,8 +17,8 @@ import com.google.gson.JsonObject
 import com.tudle.utils.DataModel
 import eco.com.gurunanak.R
 import eco.com.gurunanak.network.RestClient
-import eco.com.gurunanak.sharedprefrences.GurunanakPreferences
-import eco.com.gurunanak.sharedprefrences.JBGurunanakPreferences
+import eco.com.gurunanak.sharedprefrences.Prefs
+import eco.com.gurunanak.sharedprefrences.SharedPreferencesName
 import kotlinx.android.synthetic.main.frg_contact.*
 import org.json.JSONObject
 import retrofit2.Call
@@ -35,7 +35,6 @@ class FrgContact : Fragment() {
 
 
     internal lateinit var dialog_progress: ACProgressFlower
-    internal lateinit var mSharedPref: SharedPreferences
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -58,8 +57,7 @@ class FrgContact : Fragment() {
                 .bgCornerRadius(0f)
                 .fadeColor(Color.DKGRAY).build()
         dialog_progress.setCanceledOnTouchOutside(true)
-        mSharedPref = activity!!.getSharedPreferences(
-                GurunanakPreferences.Gurunanak_PREFERENCES, Context.MODE_PRIVATE)
+
 
     }
 
@@ -77,14 +75,13 @@ class FrgContact : Fragment() {
                 dialog_progress.show()
                 val params = HashMap<String, String>()
                 params["query"] = etQuery.text.toString()
-                params["query_by"] = JBGurunanakPreferences.getLoginId(mSharedPref)!!
+                params["query_by"] = Prefs.with(activity!!).getString(SharedPreferencesName.EMAIL,"")
                 params["status"] = ""+false
-                params["token"] = JBGurunanakPreferences.getJWTToken(mSharedPref)!!
-
-                Log.e("email","  "+JBGurunanakPreferences.getJWTToken(mSharedPref));
+                params["token"] = Prefs.with(activity!!).getString(SharedPreferencesName.JWT_TOKEN,"")
 
 
-                val call1 = RestClient.create().putQuery(JBGurunanakPreferences.getJWTToken(mSharedPref)!!,params)
+
+                val call1 = RestClient.create().putQuery(Prefs.with(activity!!).getString(SharedPreferencesName.JWT_TOKEN,""),params)
                 call1.enqueue(object : Callback<JsonObject> {
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                         Log.e("error", "error" + t.toString())

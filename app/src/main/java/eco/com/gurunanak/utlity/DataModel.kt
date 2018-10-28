@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.Uri
@@ -190,6 +191,9 @@ object DataModel {
             ActivityCompat.requestPermissions(context, arrayOf(permission), requestCode)
         }
     }
+
+
+
 
     fun requestPermissionMultiple(context: Activity, permission: Array<String>, requestCode: Int, message: String) {
 

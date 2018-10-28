@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/login_box_bg"
+    android:layout_height="match_parent"
+    android:paddingTop="?attr/actionBarSize"
+    android:orientation="vertical"
+    tools:context=".fragment.FragmentPlantationReq">
+
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:id="@+id/txtHeader"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@color/screen_bg"
+        android:layout_height="60dp" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_height="match_parent">
+
+    <TextView
+    android:layout_width="match_parent"
+    
+     android:id="@+id/txtName"
+        android:textColor="@color/black"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+    android:layout_height="54dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/grey_light"
+        android:layout_height="1px"></View>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:textColor="@color/black"
+        android:id="@+id/txtEmail"
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="54dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/grey_light"
+        android:layout_height="1px"></View>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:textColor="@color/black"
+        android:id="@+id/txtCompany"
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="54dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/grey_light"
+        android:layout_height="1px"></View>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:textColor="@color/black"
+        android:id="@+id/txtAddress"
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="54dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/grey_light"
+        android:layout_height="1px"></View>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_margin="30dp"
+       android:onClick="logOut"
+        android:textColor="@color/white"
+        android:text="LOGOUT"
+        android:background="@color/screen_bg"
+        android:layout_height="44dp" />
+    </LinearLayout>
+</LinearLayout>

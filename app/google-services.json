@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "10985126043",
+    "firebase_url": "https://gurunanak550-cc315.firebaseio.com",
+    "project_id": "gurunanak550-cc315",
+    "storage_bucket": "gurunanak550-cc315.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10985126043:android:b71e9033dd14cbae",
+        "android_client_info": {
+          "package_name": "eco.com.gurunanak"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10985126043-be6gesjfprd8stdp3pab2pd1gvnce6fs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx-GUTS3HW4zkD4BnkJOam4rmwrN6s9PE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

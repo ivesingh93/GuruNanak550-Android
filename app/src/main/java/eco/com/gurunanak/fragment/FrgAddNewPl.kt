@@ -23,14 +23,15 @@ import com.google.gson.JsonObject
 import eco.com.gurunanak.Activity_Home
 import eco.com.gurunanak.R
 import eco.com.gurunanak.network.RestClient
-import eco.com.gurunanak.sharedprefrences.GurunanakPreferences
-import eco.com.gurunanak.sharedprefrences.JBGurunanakPreferences
+import eco.com.gurunanak.sharedprefrences.Prefs
+import eco.com.gurunanak.sharedprefrences.SharedPreferencesName
 import eco.com.gurunanak.utlity.UtilityCommon
 import kotlinx.android.synthetic.main.frg_new_pl.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -47,7 +48,7 @@ class FrgAddNewPl(context: Context) : Fragment() {
     var lng :Double?=0.0
     var address:String?=""
     var urlsArr:JsonArray?=null
-    internal lateinit var mSharedPref: SharedPreferences
+
 
 //    var url1:String=""
 //    var url2Video:String=""
@@ -78,8 +79,7 @@ class FrgAddNewPl(context: Context) : Fragment() {
                 .fadeColor(Color.DKGRAY).build()
         dialog_progress.setCanceledOnTouchOutside(true)
         urlsArr= JsonArray()
-        mSharedPref = activity!!.getSharedPreferences(
-                GurunanakPreferences.Gurunanak_PREFERENCES, Context.MODE_PRIVATE)
+
     }
 
     override fun onViewCreated(view: View,savedInstanceState: Bundle?) {
@@ -95,6 +95,14 @@ class FrgAddNewPl(context: Context) : Fragment() {
 
             act.browseLoc()
         })
+
+
+        val c = Calendar.getInstance().time
+        println("Current time => $c")
+
+        val df = SimpleDateFormat("yyyy-MM-dd")
+        val formattedDate = df.format(c)
+        txtDate.setText(formattedDate)
 
         txtDate.setOnClickListener({
 
@@ -173,7 +181,7 @@ class FrgAddNewPl(context: Context) : Fragment() {
     fun savetreeData(){
         dialog_progress.show()
         var params =JsonObject()
-        params.addProperty("email", JBGurunanakPreferences.getLoginId(mSharedPref))!!
+        params.addProperty("email", Prefs.with(activity!!).getString(SharedPreferencesName.EMAIL,""))!!
         params.addProperty("location", address!!)
         params.addProperty("latitude", lat)
         params.addProperty("longitude", lng)
@@ -211,6 +219,9 @@ class FrgAddNewPl(context: Context) : Fragment() {
                         txtNoOfTree.setText("")
                         txtTypePlant.setText("")
                         txtRemark.setText("")
+
+                        var act=activity as Activity_Home
+                        act.onBackPressed()
                     }
                     else{
                         Toast.makeText(activity!!,ob.getString("Message"),Toast.LENGTH_LONG).show()
@@ -231,7 +242,6 @@ class FrgAddNewPl(context: Context) : Fragment() {
 
     fun setPlaces(userLocation:Place){
         txtLocation!!.setText(userLocation.address)
-
         lat=userLocation.latLng.latitude
         lng=userLocation.latLng.longitude
         address=""+userLocation.address

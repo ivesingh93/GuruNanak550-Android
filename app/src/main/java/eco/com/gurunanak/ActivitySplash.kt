@@ -5,12 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import com.google.firebase.FirebaseApp
 
 class ActivitySplash : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        FirebaseApp.initializeApp(this)
         callIntent()
     }
 

@@ -1,8 +1,10 @@
 package com.tudle.network
 
+import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import eco.com.gurunanak.adapter.data_faq
 import eco.com.gurunanak.model.data_pls
+import eco.com.gurunanak.model.data_resources
 import retrofit2.http.*
 
 
@@ -30,9 +32,17 @@ interface api_services {
     fun getQuery():
             retrofit2.Call<List<data_faq>>
 
+    @GET("resourceCategories")
+    fun getResourceCAt():
+            retrofit2.Call<List<String>>
+
 
     @GET
     fun deniedPlant(@Url url: String ):
             retrofit2.Call<List<data_pls>>
+
+    @GET
+    fun getResourceDEtail(@Header("token")  contentRange:String,@Url url: String ):
+            retrofit2.Call<List<data_resources>>
 
 }

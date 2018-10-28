@@ -117,7 +117,7 @@ GeoDataClient, filter: AutocompleteFilter?)
         try {
             val autocompletePredictions = results.getResult()
 
-            Log.i(TAG, "Query completed. Received " + autocompletePredictions.getCount()
+            Log.i(TAG, "Query completed. Received " + autocompletePredictions!!.getCount()
                     + " predictions.")
 
             // Freeze the results immutable representation that can be stored safely.

@@ -18,6 +18,14 @@
 
             android:title="My Plantation Map" />
 
+        <item
+            android:id="@+id/op11"
+            android:title="All Plantation" />
+
+        <item
+            android:id="@+id/op10"
+            android:title="Profile" />
+
 
 
             <item
@@ -28,6 +36,8 @@
                 android:id="@+id/op5"
 
                 android:title="About EcoSikh" />
+
+
         <item
             android:id="@+id/op6"
 

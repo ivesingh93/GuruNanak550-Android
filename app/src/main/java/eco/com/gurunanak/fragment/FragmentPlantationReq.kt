@@ -18,8 +18,8 @@ import com.tudle.utils.DataModel
 import eco.com.gurunanak.R
 import eco.com.gurunanak.model.data_pls
 import eco.com.gurunanak.network.RestClient
-import eco.com.gurunanak.sharedprefrences.GurunanakPreferences
-import eco.com.gurunanak.sharedprefrences.JBGurunanakPreferences
+import eco.com.gurunanak.sharedprefrences.Prefs
+import eco.com.gurunanak.sharedprefrences.SharedPreferencesName
 import kotlinx.android.synthetic.main.fra_my_plantation.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,7 +31,7 @@ class FragmentPlantationReq : Fragment() {
     var isPendingLoaded:Boolean?=false
     var isApprovedLoaded:Boolean?=false
     var isDeniedLoaded:Boolean?=false
-    internal lateinit var mSharedPref: SharedPreferences
+
     internal lateinit var dialog_progress: ACProgressFlower
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -105,15 +105,14 @@ class FragmentPlantationReq : Fragment() {
                 .bgCornerRadius(0f)
                 .fadeColor(Color.DKGRAY).build()
         dialog_progress.setCanceledOnTouchOutside(true)
-        mSharedPref = activity!!.getSharedPreferences(
-                GurunanakPreferences.Gurunanak_PREFERENCES, Context.MODE_PRIVATE)
+
     }
 
     fun getPendingReqs(){
 
 
         val call1 = RestClient.create().deniedPlant("plantationRecord/email=" +
-                JBGurunanakPreferences.getLoginId(mSharedPref)!!+
+                Prefs.with(activity!!).getString(SharedPreferencesName.EMAIL,"")+
                 "&status=Pending" )
         dialog_progress.show()
 
@@ -155,7 +154,7 @@ class FragmentPlantationReq : Fragment() {
     fun getApproved(){
 
         val call1 = RestClient.create().deniedPlant("plantationRecord/email=" +
-                JBGurunanakPreferences.getLoginId(mSharedPref)!!+
+                Prefs.with(activity!!).getString(SharedPreferencesName.EMAIL,"")!!+
                 "&status=Approved" )
         dialog_progress.show()
 
@@ -198,7 +197,7 @@ class FragmentPlantationReq : Fragment() {
     fun getDenied(){
 
         val call1 = RestClient.create().deniedPlant("plantationRecord/email=" +
-                JBGurunanakPreferences.getLoginId(mSharedPref)!!+
+                Prefs.with(activity!!).getString(SharedPreferencesName.EMAIL,"")!!+
                 "&status=Denied" )
         dialog_progress.show()
 

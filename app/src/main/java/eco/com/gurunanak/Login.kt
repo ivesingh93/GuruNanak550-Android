@@ -17,8 +17,8 @@ import com.squareup.okhttp.RequestBody
 import com.tudle.utils.BaseActivity
 import eco.com.gurunanak.http.OkHttpListener
 import eco.com.gurunanak.http.OkHttpPostHandler
-import eco.com.gurunanak.sharedprefrences.GurunanakPreferences
-import eco.com.gurunanak.sharedprefrences.JBGurunanakPreferences
+import eco.com.gurunanak.sharedprefrences.Prefs
+import eco.com.gurunanak.sharedprefrences.SharedPreferencesName
 import eco.com.gurunanak.utlity.Constant
 import eco.com.gurunanak.utlity.UtilityCommon
 import kotlinx.android.synthetic.main.activity_login.*
@@ -35,13 +35,13 @@ class Login : BaseActivity(), OkHttpListener {
 
     internal lateinit var dialog_progress: ACProgressFlower
     val JSON = MediaType.parse("application/json; charset=utf-8")
-    internal lateinit var mSharedPref: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         initial()
-        if (!JBGurunanakPreferences.getLoginId(mSharedPref).equals("")) {
+        if (Prefs.with(this).getString(SharedPreferencesName.JWT_TOKEN,"").length>0) {
             val intent = Intent(this, Activity_Home::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
@@ -98,8 +98,7 @@ class Login : BaseActivity(), OkHttpListener {
                 .bgCornerRadius(0f)
                 .fadeColor(Color.DKGRAY).build()
         dialog_progress.setCanceledOnTouchOutside(true)
-        mSharedPref = getSharedPreferences(
-                GurunanakPreferences.Gurunanak_PREFERENCES, Context.MODE_PRIVATE)
+
     }
 
     override fun onOkHttpResponse(callResponse: String, pageId: Int) {
@@ -110,14 +109,19 @@ class Login : BaseActivity(), OkHttpListener {
                 try {
                     val json = JSONTokener(callResponse).nextValue() as JSONObject
                     val responseCode = json.get("ResponseCode") as Int
+                    Log.e("data "," is "+json.toString())
                     val msg = json.get("Message") as String
                     if (responseCode == 200) {
                         val toast = Toast.makeText(this@Login, msg, Toast.LENGTH_LONG)
                         toast.setGravity(Gravity.CENTER, 0, 0)
                         toast.show()
-                        JBGurunanakPreferences.setLoginId(mSharedPref, json.get("email") as String)
-                        JBGurunanakPreferences.setOrgName(mSharedPref, json.get("organization_name") as String)
-                        JBGurunanakPreferences.setJWTToken(mSharedPref, json.get("token") as String)
+
+                        Prefs.with(this).save(SharedPreferencesName.EMAIL,json.getString("email"))
+                        Prefs.with(this).save(SharedPreferencesName.ORG_NAME,json.getString("organization_name"))
+                        Prefs.with(this).save(SharedPreferencesName.JWT_TOKEN,json.getString("token"))
+                        Prefs.with(this).save(SharedPreferencesName.USER_NAME,json.getString("full_name"))
+                        Prefs.with(this).save(SharedPreferencesName.ADDRESS,json.getString("address"))
+
 
 
                         val intent = Intent(this, Activity_Home::class.java)

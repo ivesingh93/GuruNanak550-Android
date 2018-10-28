@@ -2,6 +2,7 @@ package com.tudle.utils
 
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -11,7 +12,9 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import eco.com.gurunanak.Login
 import eco.com.gurunanak.R
+import eco.com.gurunanak.sharedprefrences.Prefs
 
 
 open class BaseActivity : AppCompatActivity() {
@@ -49,6 +52,33 @@ open class BaseActivity : AppCompatActivity() {
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         //        DataModel.ChangeStatusBarColor(this);
         super.onResume()
+
+    }
+
+    fun logOut(v:View){
+
+        AlertDialog.Builder(this).setTitle("Logout").setMessage("Are you sure you want to logout?")
+                .setCancelable(false)
+                .setPositiveButton("Yes") { dialog, id ->
+                    dialog.cancel()
+                    userlogOut()
+                    // dialogNoInternet.cancel();
+                }. setNegativeButton("Cancel") { dialog, id ->
+                    dialog.cancel()
+                    // dialogNoInternet.cancel();
+                }.show()
+
+
+
+    }
+
+    fun userlogOut(){
+        Prefs.with(this).removeAll()
+        val `in` = Intent(this, Login::class.java)
+        `in`.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(`in`)
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        finish();
 
     }
 
