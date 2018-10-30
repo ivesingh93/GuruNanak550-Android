@@ -31,7 +31,7 @@ class AdapResDetail(val data_list: List<String>,val imgLoader:ImageLoader,
 try {
 //    holder.title1.setText(data_list[position])
     imgLoader.displayImage(data_list[position], holder.img,
-            UIL_Image_options.options)
+            UIL_Image_options.options2)
     holder.itemView.setOnClickListener({
 
         val myMime = MimeTypeMap.getSingleton()
