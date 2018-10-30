@@ -2,6 +2,7 @@ package eco.com.gurunanak.fragment
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
@@ -35,6 +36,7 @@ import com.google.gson.Gson
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 import com.tudle.utils.DataModel
+import eco.com.gurunanak.ActivityPlantationDetail
 import eco.com.gurunanak.R
 import eco.com.gurunanak.adapter.PlacesAdapter
 import eco.com.gurunanak.http.OkHttpGetHandler
@@ -265,15 +267,14 @@ class FrgMyPlMap : Fragment(), OnMapReadyCallback, OkHttpListener ,
 
                 if (mJBMaker.master[i].status.equals("Pending") || mJBMaker.master[i].status.equals("all")) {
                     val markerOptions = MarkerOptions()
-                    googleMap!!.addMarker(markerOptions.position(latLng).title(mJBMaker.master[i].full_name).
-                            snippet(mJBMaker.master[i].id.toString())
+                    googleMap!!.addMarker(markerOptions.position(latLng).snippet(mJBMaker!!.master[i].id.toString())
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
                     googleMap!!.addMarker(markerOptions)
                     googleMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng1, 5.0f))
                 }
                 if (mJBMaker.master[i].status.equals("Approved") || mJBMaker.master[i].status.equals("all")) {
                     val markerOptions = MarkerOptions()
-                    googleMap!!.addMarker(markerOptions.position(latLng).title(mJBMaker.master[i].full_name).snippet(mJBMaker.master[i].id.toString())
+                    googleMap!!.addMarker(markerOptions.position(latLng).snippet(mJBMaker!!.master[i].id.toString())
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
                     googleMap!!.addMarker(markerOptions)
                     googleMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng1, 5.0f))
@@ -281,7 +282,7 @@ class FrgMyPlMap : Fragment(), OnMapReadyCallback, OkHttpListener ,
 
                 if (mJBMaker.master[i].status.equals("Denied") || mJBMaker.master[i].status.equals("all")) {
                     val markerOptions = MarkerOptions()
-                    googleMap!!.addMarker(markerOptions.position(latLng).title(mJBMaker.master[i].full_name).snippet(mJBMaker.master[i].id.toString())
+                    googleMap!!.addMarker(markerOptions.position(latLng).snippet(mJBMaker!!.master[i].id.toString())
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
                     googleMap!!.addMarker(markerOptions)
                     googleMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng1, 5.0f))
@@ -293,7 +294,11 @@ class FrgMyPlMap : Fragment(), OnMapReadyCallback, OkHttpListener ,
             googleMap!!.setOnMarkerClickListener(object : GoogleMap.OnMarkerClickListener {
                 override fun onMarkerClick(marker: Marker): Boolean {
 
-                    Log.i("MARKER-CLICK", "" + marker.getSnippet())
+                    Log.i("MARKER-CLICK", "" + marker.id)
+                    var intent=Intent(activity,ActivityPlantationDetail::class.java)
+                    intent.putExtra("id",marker.getSnippet())
+                    marker.hideInfoWindow()
+                    startActivity(intent)
                     return false
                 }
             })

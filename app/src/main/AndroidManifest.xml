@@ -45,11 +45,7 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-        <activity
-            android:name=".MapsActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
         <activity
             android:name=".Activity_Home"
             android:label="@string/title_activity__home"
@@ -58,6 +54,19 @@
             android:name=".ActivityForgot"
             android:label="@string/title_activity__home"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
+        <activity
+            android:name=".ActivityPlantationDetail"
+            android:label="@string/title_activity__home"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
+        <activity
+            android:name="com.darsh.multipleimageselect.activities.AlbumSelectActivity"
+            android:theme="@style/MultipleImageSelectTheme">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

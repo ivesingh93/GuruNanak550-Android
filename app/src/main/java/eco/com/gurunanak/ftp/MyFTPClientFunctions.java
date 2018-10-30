@@ -276,16 +276,18 @@ public class MyFTPClientFunctions {
         try {
             FileInputStream srcFileStream = new FileInputStream(srcFilePath);
 
-            // change working directory to the destination directory
-            // if (ftpChangeDirectory(desDirectory)) {
+
+
             status = mFTPClient.storeFile(desFileName, srcFileStream);
+
 
             srcFileStream.close();
             Log.e("hehehes"+mFTPClient.getStatus(), "upload: " + status);
-
+            Log.e("hehehes"+srcFilePath, "upload: " + desFileName);
             return status;
         } catch (Exception e) {
             e.printStackTrace();
+
             Log.d(TAG, "upload failed: " + e);
         }
 

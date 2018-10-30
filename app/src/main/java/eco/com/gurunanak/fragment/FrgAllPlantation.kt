@@ -2,6 +2,7 @@ package eco.com.gurunanak.fragment
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Location
@@ -35,6 +36,7 @@ import com.google.gson.Gson
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 import com.tudle.utils.DataModel
+import eco.com.gurunanak.ActivityPlantationDetail
 import eco.com.gurunanak.R
 import eco.com.gurunanak.adapter.PlacesAdapter
 import eco.com.gurunanak.http.OkHttpGetHandler
@@ -275,8 +277,12 @@ class FrgAllPlantation : Fragment(), OnMapReadyCallback, OkHttpListener ,
 
             googleMap!!.setOnMarkerClickListener(object : GoogleMap.OnMarkerClickListener {
                 override fun onMarkerClick(marker: Marker): Boolean {
-
+                    marker.hideInfoWindow()
                     Log.i("MARKER-CLICK", "" + marker.getSnippet())
+                    var intent= Intent(activity, ActivityPlantationDetail::class.java)
+                    intent.putExtra("id",marker.getSnippet())
+
+                    startActivity(intent)
                     return false
                 }
             })

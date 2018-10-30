@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/login_box_bg"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+    tools:context=".fragment.FragmentPlantationReq">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/login_box_bg"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        tools:context=".fragment.FragmentPlantationReq">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/screen_bg"
+        android:layout_height="60dp"
+       >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:onClick="BackBtn"
+
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="10dp"
+            android:padding="4dp"
+            android:src="@drawable/ic_keyboard_backspace_black_24dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:id="@+id/txtHeader"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Plantation Detail"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+
+           />
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_height="match_parent">
+
+    <TextView
+    android:layout_width="match_parent"
+    
+     android:id="@+id/txtUName"
+        android:textColor="@color/black"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+       android:layout_height="34dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/grey_light"
+        android:layout_height="1px"></View>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/txtUEmail"
+            android:textColor="@color/black"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:layout_height="34dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/grey_light"
+            android:layout_height="1px"></View>
+
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+
+            android:id="@+id/txtOrgName"
+            android:textColor="@color/black"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:layout_height="34dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/grey_light"
+            android:layout_height="1px"></View>
+        <TextView
+            android:layout_width="match_parent"
+
+            android:id="@+id/txtName"
+            android:textColor="@color/black"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:layout_height="34dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/grey_light"
+            android:layout_height="1px"></View>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:textColor="@color/black"
+        android:id="@+id/txtEmail"
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="34dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/grey_light"
+        android:layout_height="1px"></View>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:textColor="@color/black"
+        android:id="@+id/txtCompany"
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="34dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/grey_light"
+        android:layout_height="1px"></View>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:textColor="@color/black"
+        android:id="@+id/txtAddress"
+        android:paddingLeft="20dp"
+        android:gravity="center_vertical"
+        android:layout_height="34dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/grey_light"
+        android:layout_height="1px"></View>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:textColor="@color/black"
+            android:id="@+id/txtPlantedTypes"
+            android:paddingLeft="20dp"
+            android:gravity="center_vertical"
+            android:layout_height="34dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/grey_light"
+            android:layout_height="1px"></View>
+
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:textColor="@color/black"
+            android:id="@+id/txtStatus"
+            android:paddingLeft="20dp"
+            android:gravity="center_vertical"
+            android:layout_height="34dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/grey_light"
+            android:layout_height="1px"></View>
+
+
+
+        <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:id="@+id/txtStatus"-->
+            <!--android:paddingLeft="20dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:layout_height="34dp" />-->
+
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:background="@color/grey_light"-->
+            <!--android:layout_height="1px"></View>-->
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:textColor="@color/black"
+           android:text="Resources for plantation"
+            android:textStyle="bold"
+            android:textSize="20sp"
+
+            android:gravity="center"
+            android:layout_height="34dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/lv"
+            android:foregroundGravity="center"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+        <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_margin="30dp"-->
+       <!--android:onClick="logOut"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:text="LOGOUT"-->
+        <!--android:background="@color/screen_bg"-->
+        <!--android:layout_height="44dp" />-->
+    </LinearLayout></LinearLayout>
+</android.support.v4.widget.NestedScrollView>

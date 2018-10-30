@@ -5,6 +5,7 @@ import com.google.gson.JsonObject
 import eco.com.gurunanak.adapter.data_faq
 import eco.com.gurunanak.model.data_pls
 import eco.com.gurunanak.model.data_resources
+import org.json.JSONArray
 import retrofit2.http.*
 
 
@@ -44,5 +45,10 @@ interface api_services {
     @GET
     fun getResourceDEtail(@Header("token")  contentRange:String,@Url url: String ):
             retrofit2.Call<List<data_resources>>
+
+
+    @GET
+    fun getPlantationDetail(@Header("token")  contentRange:String,@Url url: String ):
+            retrofit2.Call<JsonObject>
 
 }

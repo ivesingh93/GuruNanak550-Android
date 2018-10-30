@@ -121,6 +121,7 @@ class Login : BaseActivity(), OkHttpListener {
                         Prefs.with(this).save(SharedPreferencesName.JWT_TOKEN,json.getString("token"))
                         Prefs.with(this).save(SharedPreferencesName.USER_NAME,json.getString("full_name"))
                         Prefs.with(this).save(SharedPreferencesName.ADDRESS,json.getString("address"))
+                        Prefs.with(this).save(SharedPreferencesName.LOGIN_ID,""+json.getInt("id"))
 
 
 

@@ -248,15 +248,17 @@ class FrgAddNewPl(context: Context) : Fragment() {
         txtLocation!!.setError(null);
     }
 
-    fun setUrl(urdl1:String){
+    fun setUrl(urdl1:String,fileName:String){
         urlsArr!!.add(urdl1)
         txtImage.setError(null)
+        txtImage.setText(txtImage.text.toString()+"\n"+fileName)
 
     }
 
-    fun setUrl2(urdl2:String){
+    fun setUrl2(urdl2:String,fileName:String){
         urlsArr!!.add(urdl2)
-        txtImage.setError(null)
+        txtVideo.setError(null)
+        txtVideo.setText(txtVideo.text.toString()+"\n"+fileName)
     }
 
 

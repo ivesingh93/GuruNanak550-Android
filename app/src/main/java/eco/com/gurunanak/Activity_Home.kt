@@ -23,6 +23,9 @@ import android.view.MenuItem
 import android.widget.Toast
 import cc.cloudist.acplibrary.ACProgressConstant
 import cc.cloudist.acplibrary.ACProgressFlower
+import com.darsh.multipleimageselect.activities.AlbumSelectActivity
+import com.darsh.multipleimageselect.helpers.Constants
+import com.darsh.multipleimageselect.models.Image
 import com.google.android.gms.location.places.ui.PlacePicker
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
@@ -30,6 +33,8 @@ import com.tudle.utils.BaseActivity
 import com.tudle.utils.DataModel
 import eco.com.gurunanak.fragment.*
 import eco.com.gurunanak.ftp.MyFTPClientFunctions
+import eco.com.gurunanak.sharedprefrences.Prefs
+import eco.com.gurunanak.sharedprefrences.SharedPreferencesName
 import eco.com.gurunanak.utlity.ImageFilePath
 import kotlinx.android.synthetic.main.activity__home.*
 import kotlinx.android.synthetic.main.app_bar_activity__home.*
@@ -47,9 +52,13 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
     val SELECT_FILE = 2002
     val selectVideo=2003
     internal lateinit var dialog_progress: ACProgressFlower
+    internal lateinit var dialog_progress2: ACProgressFlower
     var selectedFragId=0
     var locationManager: LocationManager? = null
-
+    var pathList:ArrayList<String>?=null
+    var images: ArrayList<Image>?=null
+    var fileSize=0
+    var progreSSize=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -190,7 +199,10 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        pathList=ArrayList<String>()
         if (resultCode == Activity.RESULT_OK) {
+
             if (requestCode == 1001) {
 
                 val place = PlacePicker.getPlace(data, this!!)
@@ -216,7 +228,43 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
                 imageDownloader.execute(realPath)
                 dialog_progress.show()
             }
+
+
+            if (requestCode == Constants.REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+                  images=ArrayList<Image>()
+
+                  images = data.getParcelableArrayListExtra(Constants.INTENT_EXTRA_IMAGES);
+                progreSSize=0
+                  fileSize=images!!.size
+                  handleMultipleImageSync()
+
+
+            }
         }
+    }
+
+    fun handleMultipleImageSync(){
+
+
+        if(images!!.size>0){
+
+            dialog_progress2 = ACProgressFlower.Builder(this)
+                    .direction(ACProgressConstant.DIRECT_CLOCKWISE)
+                    .themeColor(Color.WHITE)
+                    .bgColor(Color.TRANSPARENT)
+                    .bgAlpha(0f)
+                    .text("Uploading "+(progreSSize+1)+"/"+fileSize)
+                    .bgCornerRadius(0f)
+                    .fadeColor(Color.DKGRAY).build()
+            dialog_progress2.setCanceledOnTouchOutside(false)
+
+            val imageDownloader = ImageDownloader3()
+            imageDownloader.execute(images!!.get(0).path)
+            dialog_progress2.show()
+        }
+
+
+
     }
 
     fun browseLoc(){
@@ -227,11 +275,8 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
     private fun onCaptureImageResult(data: Intent) {
         var thumbnail: Bitmap = data.extras!!.get("data") as Bitmap
         val bytes = ByteArrayOutputStream()
-
         thumbnail = Bitmap.createScaledBitmap(thumbnail, 500, 500, false)
-
         thumbnail.compress(Bitmap.CompressFormat.PNG, 90, bytes)
-
         destination = File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis().toString() + ".jpg")
         val imageDownloader = ImageDownloader()
@@ -253,23 +298,14 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
 
 
 
-     fun galleryIntent() {
+    fun galleryIntent() {
 
         if(DataModel.checkPermission(this!!, android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 && DataModel.checkPermission(this!!, android.Manifest.permission.CAMERA)
                 && DataModel.checkPermission(this!!, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                var intent = Intent()
-                intent = Intent(Intent.ACTION_OPEN_DOCUMENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/*");
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_FILE);
-            } else {
-                var intent = Intent()
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_FILE);
-            }
+                val intent =  Intent(this, AlbumSelectActivity::class.java)
+                intent.putExtra(Constants.INTENT_EXTRA_LIMIT, 5);
+                startActivityForResult(intent, Constants.REQUEST_CODE);
         }
         else{
 
@@ -278,7 +314,8 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         }
     }
 
-     fun cameraIntent() {
+
+    fun cameraIntent() {
 
         if(DataModel.checkPermission(this!!, android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 && DataModel.checkPermission(this!!, android.Manifest.permission.CAMERA)
@@ -287,9 +324,7 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
             startActivityForResult(intent, REQUEST_CAMERA)
         }
         else{
-//            DataModel.requestPermissionMultiple(this!!, arrayOf(android.Manifest.permission.CAMERA,
-//                    Manifest.permission.WRITE_EXTERNAL_STORAGE),
-//                    1022, "Enable permission")
+//
             requestCameraAndStorage(101)
 
 
@@ -318,15 +353,22 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
 
     private inner class ImageDownloader : AsyncTask<String, String, String>() {
 
+         var fileName=""
         override fun doInBackground(vararg PathHolder: String): String? {
 
+            val tsLong = System.currentTimeMillis() / 1000
+            val ts = tsLong.toString()
             Log.i("NAME_ATT", PathHolder[0].substring(PathHolder[0].lastIndexOf("/") + 1))
-          var ststus=  ftpclient!!.ftpUploadProfile(
+            fileName=PathHolder[0].substring(PathHolder[0].lastIndexOf("/") + 1)
+            var ststus=  ftpclient!!.ftpUploadProfile(
                     PathHolder[0],
-                    PathHolder[0].substring(
-                            PathHolder[0].lastIndexOf("/") + 1), "/", this@Activity_Home)
+                    Prefs.with(this@Activity_Home).getString(SharedPreferencesName.LOGIN_ID,"")+"_"+
+                            ts+"_"+PathHolder[0].substring(
+                            PathHolder[0].lastIndexOf("/") + 1), Prefs.with(this@Activity_Home).getString(SharedPreferencesName.LOGIN_ID,"")+"/", this@Activity_Home)
             if(ststus) {
-                return "http://pixeldropinc.com/ecosikh/" + PathHolder[0].substring(PathHolder[0].lastIndexOf("/") + 1)
+                return "http://pixeldropinc.com/ecosikh/"+
+                        Prefs.with(this@Activity_Home).getString(SharedPreferencesName.LOGIN_ID,"")+"_"+
+                        ts+"_"+ PathHolder[0].substring(PathHolder[0].lastIndexOf("/") + 1)
             }else{
                 return  ""
             }
@@ -346,7 +388,7 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         override fun onPostExecute(result: String) {
             Log.i("Async-Example", "onPostExecute Called"+result)
 
-            frgNewpl!!.setUrl(result)
+            frgNewpl!!.setUrl(result,fileName)
             dialog_progress.dismiss()
             //dialog.dismiss()
         }
@@ -354,18 +396,28 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
     }
 
 
-
-    private inner class ImageDownloader2 : AsyncTask<String, String, String>() {
+    private inner class ImageDownloader3 : AsyncTask<String, String, String>() {
+        var fileName=""
+        var position=0
+        fun setPost(pos:Int) {
+            position=pos
+        }
 
         override fun doInBackground(vararg PathHolder: String): String? {
 
+            val tsLong = System.currentTimeMillis() / 1000
+            val ts = tsLong.toString()
             Log.i("NAME_ATT", PathHolder[0].substring(PathHolder[0].lastIndexOf("/") + 1))
+            fileName=PathHolder[0].substring(PathHolder[0].lastIndexOf("/") + 1)
             var ststus=  ftpclient!!.ftpUploadProfile(
                     PathHolder[0],
-                    PathHolder[0].substring(
-                            PathHolder[0].lastIndexOf("/") + 1), "/", this@Activity_Home)
+                    Prefs.with(this@Activity_Home).getString(SharedPreferencesName.LOGIN_ID,"")+"_"+
+                            ts+"_"+PathHolder[0].substring(
+                            PathHolder[0].lastIndexOf("/") + 1), Prefs.with(this@Activity_Home).getString(SharedPreferencesName.LOGIN_ID,"")+"/", this@Activity_Home)
             if(ststus) {
-                return "http://pixeldropinc.com/ecosikh/" + PathHolder[0].substring(PathHolder[0].lastIndexOf("/") + 1)
+                return "http://pixeldropinc.com/ecosikh/"+
+                        Prefs.with(this@Activity_Home).getString(SharedPreferencesName.LOGIN_ID,"")+"_"+
+                        ts+"_"+ PathHolder[0].substring(PathHolder[0].lastIndexOf("/") + 1)
             }else{
                 return  ""
             }
@@ -385,7 +437,53 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         override fun onPostExecute(result: String) {
             Log.i("Async-Example", "onPostExecute Called"+result)
 
-            frgNewpl!!.setUrl2(result)
+            frgNewpl!!.setUrl(result,fileName)
+            dialog_progress2.dismiss()
+            progreSSize=progreSSize+1
+            images!!.removeAt(position)
+            handleMultipleImageSync()
+        }
+
+    }
+
+
+
+    private inner class ImageDownloader2 : AsyncTask<String, String, String>() {
+        var fileName=""
+        override fun doInBackground(vararg PathHolder: String): String? {
+            val tsLong = System.currentTimeMillis() / 1000
+            val ts = tsLong.toString()
+            Log.i("NAME_ATT", PathHolder[0].substring(PathHolder[0].lastIndexOf("/") + 1))
+            fileName=PathHolder[0].substring(PathHolder[0].lastIndexOf("/") + 1)
+            var ststus=  ftpclient!!.ftpUploadProfile(
+                    PathHolder[0],
+                    Prefs.with(this@Activity_Home).getString(SharedPreferencesName.LOGIN_ID,"")+"_"+
+                            ts+"_"+PathHolder[0].substring(
+                            PathHolder[0].lastIndexOf("/") + 1), Prefs.with(this@Activity_Home).getString(SharedPreferencesName.LOGIN_ID,"")+"/", this@Activity_Home)
+            if(ststus) {
+                return "http://pixeldropinc.com/ecosikh/"+
+                        Prefs.with(this@Activity_Home).getString(SharedPreferencesName.LOGIN_ID,"")+"_"+
+                        ts+"_"+ PathHolder[0].substring(PathHolder[0].lastIndexOf("/") + 1)
+            }else{
+                return  ""
+            }
+        }
+
+        override fun onProgressUpdate(vararg values: String)
+
+        {
+            Log.e("value","os  "+values)
+        }
+
+        override fun onPreExecute() {
+            Log.i("Async-Example", "onPreExecute Called")
+            //dialog.show()
+        }
+
+        override fun onPostExecute(result: String) {
+            Log.i("Async-Example", "onPostExecute Called"+result)
+
+            frgNewpl!!.setUrl2(result,fileName)
             dialog_progress.dismiss()
             //dialog.dismiss()
         }

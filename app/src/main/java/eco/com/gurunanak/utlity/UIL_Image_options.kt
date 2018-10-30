@@ -29,7 +29,19 @@ object UIL_Image_options {
 
 
 
+    var options2 = DisplayImageOptions.Builder()
+            .showImageOnLoading(R.drawable.my_logo)
+            .showImageForEmptyUri(R.drawable.my_logo)
+            .showImageOnFail(R.drawable.my_logo)
+            .resetViewBeforeLoading(true)
+            .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .considerExifParams(false)
+            .bitmapConfig(Bitmap.Config.ARGB_8888)
+            .displayer(SimpleBitmapDisplayer())
 
+            .handler(Handler())
+            .build()
 
 
 

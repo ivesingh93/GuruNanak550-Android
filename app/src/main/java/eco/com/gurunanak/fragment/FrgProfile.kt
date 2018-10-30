@@ -39,7 +39,7 @@ class FrgProfile : Fragment() {
         txtHeader.setText(Prefs.with(activity!!).getString(SharedPreferencesName.USER_NAME,""))
         txtName.setText("Name - "+Prefs.with(activity!!).getString(SharedPreferencesName.USER_NAME,""))
         txtEmail.setText("Email - "+Prefs.with(activity!!).getString(SharedPreferencesName.EMAIL,""))
-        txtCompany.setText("Organisation - "+Prefs.with(activity!!).getString(SharedPreferencesName.ORG_NAME,""))
+        txtCompany.setText("Organization - "+Prefs.with(activity!!).getString(SharedPreferencesName.ORG_NAME,""))
         txtAddress.setText("Full Address - "+Prefs.with(activity!!).getString(SharedPreferencesName.ADDRESS,""))
 
     }
