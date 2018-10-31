@@ -3,6 +3,7 @@ package com.tudle.network
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import eco.com.gurunanak.adapter.data_faq
+import eco.com.gurunanak.model.data_news
 import eco.com.gurunanak.model.data_pls
 import eco.com.gurunanak.model.data_resources
 import org.json.JSONArray
@@ -37,6 +38,9 @@ interface api_services {
     fun getResourceCAt():
             retrofit2.Call<List<String>>
 
+    @GET("news")
+    fun getNews():
+            retrofit2.Call<List<data_news>>
 
     @GET
     fun deniedPlant(@Url url: String ):

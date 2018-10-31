@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/screen_bg"
+        android:layout_height="60dp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:onClick="BackBtn"
+
+          android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:padding="4dp"
+            android:src="@drawable/ic_keyboard_backspace_black_24dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:id="@+id/txtHeader"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="News Detail"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+
+            />
+
+    </RelativeLayout>
+
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/progressBar"
+        android:layout_height="wrap_content" />
+    <WebView
+        android:layout_width="match_parent"
+        android:id="@+id/webView"
+        android:layout_height="match_parent">
+
+    </WebView>
+</LinearLayout>

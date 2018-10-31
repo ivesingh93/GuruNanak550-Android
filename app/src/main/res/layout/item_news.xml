@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingBottom="10dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="12dp"
+        android:elevation="10dp"
+
+        android:background="@color/white"
+        android:layout_height="100dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginRight="20dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/thumb"
+                android:visibility="visible"
+                android:scaleType="fitXY"
+                android:layout_height="80dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:id="@+id/txtTitle"
+                android:hint="Phone and Email"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:textColor="@color/black"
+                android:id="@+id/txtDesc"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="+9192168-00636 \n sss    snvhvdhvdvvdjevdhewvdhjvehjdvejhinfo@ecosingh.org "
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:textColor="@color/black"
+                android:id="@+id/txtDates"
+                android:gravity="left"
+                android:layout_marginTop="10dp"
+                android:text=""
+                android:layout_height="wrap_content" />
+        </LinearLayout></LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

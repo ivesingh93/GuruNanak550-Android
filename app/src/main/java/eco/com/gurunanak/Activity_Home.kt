@@ -130,6 +130,7 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
             R.id.op8 -> fragment = FrgResources()
             R.id.op9 -> fragment = FrgFAQ()
             R.id.op10 -> fragment = FrgProfile()
+            R.id.op12 -> fragment = FrgNews()
             R.id.op11 -> {
 
                 if(CheckEnableGPS()){
