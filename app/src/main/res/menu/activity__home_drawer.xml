@@ -6,58 +6,40 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/op1"
-
             android:title="Add new Plantation" />
         <item
             android:id="@+id/op2"
-
-            android:title="Plantation Requests" />
-
+            android:title="My plantations" />
         <item
             android:id="@+id/op3"
-
             android:title="My Plantation Map" />
-
         <item
-            android:id="@+id/op11"
-            android:title="All Plantation" />
-
+            android:id="@+id/op4"
+            android:title="All Plantations" />
         <item
-            android:id="@+id/op10"
-            android:title="Profile" />
-
-
-
-            <item
-                android:id="@+id/op4"
-
-                android:title="About GURU NANAK 550" />
-            <item
-                android:id="@+id/op5"
-
-                android:title="About EcoSikh" />
-        <item
-            android:id="@+id/op12"
-
-            android:title="News" />
-
+            android:id="@+id/op5"
+            android:title="News and Updates" />
         <item
             android:id="@+id/op6"
-
-            android:title="Donate" />
-        <item
-            android:id="@+id/op7"
-
-            android:title="Contact" />
-
-        <item
-            android:id="@+id/op8"
-
             android:title="Resources" />
         <item
-            android:id="@+id/op9"
-
+            android:id="@+id/op7"
             android:title="FAQs" />
+        <item
+            android:id="@+id/op8"
+            android:title="About GURU NANAK 550" />
+        <item
+            android:id="@+id/op9"
+            android:title="About EcoSikh" />
+        <item
+            android:id="@+id/op10"
+            android:title="Contact" />
+        <item
+            android:id="@+id/op11"
+            android:title="Donate" />
+        <item
+            android:id="@+id/op12"
+            android:title="My Profile" />
     </group>
-        </menu>
+</menu>
 

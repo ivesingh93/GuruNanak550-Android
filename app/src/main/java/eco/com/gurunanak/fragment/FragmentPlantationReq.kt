@@ -42,7 +42,7 @@ class FragmentPlantationReq : Fragment() {
     override fun onResume() {
         super.onResume()
         // Set title
-        activity!!.title = "Plantation Requests"
+        activity!!.title = "My Plantations"
     }
 
     override fun onViewCreated(view: View,savedInstanceState: Bundle?) {

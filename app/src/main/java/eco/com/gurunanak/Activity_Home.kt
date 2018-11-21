@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.location.LocationManager
+import android.net.Uri
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
@@ -123,21 +124,23 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
                 if(CheckEnableGPS()){
                     fragment = FrgMyPlMap()
                 }}
-            R.id.op4 -> fragment = FrgAbt550()
-            R.id.op5 -> fragment = FrgAbtEco()
-            R.id.op6 -> fragment = FrgDonate()
-            R.id.op7 -> fragment = FrgContact()
-            R.id.op8 -> fragment = FrgResources()
-            R.id.op9 -> fragment = FrgFAQ()
-            R.id.op10 -> fragment = FrgProfile()
-            R.id.op12 -> fragment = FrgNews()
-            R.id.op11 -> {
+            R.id.op4 -> {
 
                 if(CheckEnableGPS()){
                     fragment = FrgAllPlantation()
                 }}
-
-
+            R.id.op5 -> fragment = FrgNews()
+            R.id.op6 -> fragment = FrgResources()
+            R.id.op7 -> fragment = FrgFAQ()
+            R.id.op8 -> fragment = FrgAbt550()
+            R.id.op9 -> fragment = FrgAbtEco()
+            R.id.op10 -> fragment = FrgContact()
+            R.id.op12 -> fragment = FrgProfile()
+            R.id.op11 -> {
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse("http://gurunanak550.org/donate.php")
+                startActivity(i)
+            }
         }
 
         //replacing the fragment
@@ -158,7 +161,7 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
                 selectedFragId=1
             }
             R.id.op2 -> {
-                selectedFragId=0
+                selectedFragId=1
             }
             R.id.op3 -> {
                 selectedFragId=1
@@ -167,7 +170,7 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
                 selectedFragId=1
             }
             R.id.op5 -> {
-                selectedFragId=1
+                selectedFragId=0
             }
             R.id.op6 -> {
                 selectedFragId=1

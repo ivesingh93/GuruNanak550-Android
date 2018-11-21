@@ -52,7 +52,7 @@ class ActivityForgot : BaseActivity(), OkHttpListener {
                     input_password1.error = "Please enter password"
                 }
                 else if(!input_password1.text.toString().equals(confirTxt)){
-                    input_password_c.error = "Please erify your password"
+                    input_password_c.error = "Please verify your password"
                 }
 
 
