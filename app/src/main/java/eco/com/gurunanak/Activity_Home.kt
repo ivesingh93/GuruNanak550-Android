@@ -72,7 +72,7 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
         nav_view.setNavigationItemSelectedListener(this)
-        displaySelectedScreen(R.id.op2);
+        displaySelectedScreen(R.id.op5);
 
         ftpclient = MyFTPClientFunctions()
         Thread(Runnable {
@@ -188,6 +188,9 @@ class Activity_Home : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
                 selectedFragId=1
             }
             R.id.op11 -> {
+                selectedFragId=1
+            }
+            R.id.op12 -> {
                 selectedFragId=1
             }
 

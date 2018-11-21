@@ -61,7 +61,7 @@ class FrgNews : Fragment() {
         super.onResume()
 
 
-        activity!!.title = "News"
+        activity!!.title = "News and Updates"
     }
 
     private fun initial() {

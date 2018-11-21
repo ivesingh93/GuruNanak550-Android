@@ -42,7 +42,7 @@ class AdapResources(val data_list: List<data_resources>,
 
         holder.itemView.setOnClickListener({
 
-            if(Str.equals("VIDEOS")){
+            if(Str.equals("Videos")){
               try {
                   val videoClient = Intent(Intent.ACTION_VIEW)
                   videoClient.setData(Uri.parse(data_list[position].url))
@@ -50,7 +50,7 @@ class AdapResources(val data_list: List<data_resources>,
                   context.startActivity(videoClient)
               }catch (E:Exception){}
             }
-            if(Str.equals("DOCUMENTS")){
+            if(Str.equals("Documents")){
 
                 val myMime = MimeTypeMap.getSingleton()
                 val newIntent = Intent(Intent.ACTION_VIEW)
@@ -66,7 +66,7 @@ class AdapResources(val data_list: List<data_resources>,
 
             }
 
-            if(Str.equals("POSTERS")){
+            if(Str.equals("Posters")){
 
                 val myMime = MimeTypeMap.getSingleton()
                 val newIntent = Intent(Intent.ACTION_VIEW)
