@@ -6,10 +6,10 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/op1"
-            android:title="Add new Plantation" />
+            android:title="Add New Plantation" />
         <item
             android:id="@+id/op2"
-            android:title="My plantations" />
+            android:title="My Plantations" />
         <item
             android:id="@+id/op3"
             android:title="My Plantation Map" />

@@ -49,20 +49,24 @@
         <activity
             android:name=".Activity_Home"
             android:label="@string/title_activity__home"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
             android:name=".ActivityForgot"
             android:label="@string/title_activity__home"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
         <activity
             android:name=".ActivityPlantationDetail"
             android:label="@string/title_activity__home"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
         <activity
             android:name=".ActivityWebPages"
             android:label="@string/title_activity__home"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
         <activity
